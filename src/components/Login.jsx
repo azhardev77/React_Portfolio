@@ -18,23 +18,6 @@ export default function Login({ onLoginSuccess }) {
   // Secure global cloud DB endpoint
   const DB_URL = "https://kvdb.io/JdNFFp7sNAmHmADV83gKko/users";
 
-  const fetchCloudUsers = async () => {
-    try {
-      const response = await fetch(DB_URL);
-      if (!response.ok) {
-        if (response.status === 404) return [];
-        throw new Error('Database returned status: ' + response.status);
-      }
-      const text = await response.text();
-      if (!text) return [];
-      const data = JSON.parse(text);
-      return Array.isArray(data) ? data : [];
-    } catch (error) {
-      console.warn("⚠️ Cloud Database offline, utilizing localized fail-safe backup:", error);
-      return JSON.parse(localStorage.getItem('users')) || [];
-    }
-  };
-
   const saveCloudUsers = async (usersList) => {
     try {
       const response = await fetch(DB_URL, {
@@ -51,6 +34,43 @@ export default function Login({ onLoginSuccess }) {
       console.error("❌ Failed to synchronize with Cloud DB:", error);
       localStorage.setItem('users', JSON.stringify(usersList));
       return false;
+    }
+  };
+
+  const fetchCloudUsers = async () => {
+    try {
+      const response = await fetch(DB_URL);
+      if (!response.ok) {
+        if (response.status === 404) return [];
+        throw new Error('Database returned status: ' + response.status);
+      }
+      const text = await response.text();
+      if (!text) return [];
+      const data = JSON.parse(text);
+      const cloudList = Array.isArray(data) ? data : [];
+
+      // Proactive local-to-cloud auto-merge
+      const localList = JSON.parse(localStorage.getItem('users')) || [];
+      let merged = [...cloudList];
+      let hasNewLocal = false;
+
+      localList.forEach(localUser => {
+        if (!merged.some(u => u.username.toLowerCase() === localUser.username.toLowerCase())) {
+          merged.push(localUser);
+          hasNewLocal = true;
+        }
+      });
+
+      if (hasNewLocal) {
+        console.log("Merging local offline accounts to cloud database...");
+        await saveCloudUsers(merged);
+        return merged;
+      }
+
+      return cloudList;
+    } catch (error) {
+      console.warn("⚠️ Cloud Database offline, utilizing localized fail-safe backup:", error);
+      return JSON.parse(localStorage.getItem('users')) || [];
     }
   };
 
