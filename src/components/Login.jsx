@@ -183,7 +183,6 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                 required
               />
               <label>Username</label>
-              <i className="fa-solid fa-user"></i>
             </div>
 
             <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
@@ -195,7 +194,6 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                 required
               />
               <label>Password</label>
-              <i className="fa-solid fa-lock"></i>
             </div>
 
             <div className="field-wrapper slide-element" style={{ transform: 'translateZ(20px)' }}>
@@ -260,7 +258,6 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                 required
               />
               <label>Username</label>
-              <i className="fa-solid fa-user"></i>
             </div>
 
             <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
@@ -272,7 +269,6 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                 required
               />
               <label>Email</label>
-              <i className="fa-solid fa-envelope"></i>
             </div>
 
             <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
@@ -284,7 +280,6 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                 required
               />
               <label>Password</label>
-              <i className="fa-solid fa-lock"></i>
             </div>
 
             <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
@@ -296,7 +291,6 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                 required
               />
               <label>Phone Number</label>
-              <i className="fa-solid fa-phone"></i>
             </div>
 
             <div className="field-wrapper slide-element" style={{ transform: 'translateZ(20px)' }}>
