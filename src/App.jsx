@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './main.css';
 
 // Components
@@ -51,6 +51,79 @@ export default function App() {
 
   const [selectedCert, setSelectedCert] = useState(null);
   const [activeSection, setActiveSection] = useState('home');
+
+  const canvasRef = useRef(null);
+
+  // Global background particle constellation system
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animFrameId;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Dynamic colors based on active theme
+    const primaryColor = isDark ? '0, 245, 255' : '14, 165, 233'; // Cyber cyan vs Slate blue
+    const secondaryColor = isDark ? '168, 85, 247' : '90, 129, 138'; // Cyber purple vs Soft teal
+
+    // Particle system (120 particles for a beautiful full-screen starfield node network!)
+    const particles = Array.from({ length: 120 }, () => {
+      const useSecondary = Math.random() > 0.6;
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.3,
+        dx: (Math.random() - 0.5) * 0.35,
+        dy: (Math.random() - 0.5) * 0.35,
+        alpha: Math.random() * 0.5 + 0.15,
+        colorStr: useSecondary ? secondaryColor : primaryColor,
+      };
+    });
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.colorStr}, ${p.alpha})`;
+        ctx.fill();
+      });
+
+      // Draw connections
+      particles.forEach((a, i) => {
+        particles.slice(i + 1).forEach((b) => {
+          const dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(${a.colorStr}, ${0.12 * (1 - dist / 130)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+
+      animFrameId = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animFrameId);
+      window.removeEventListener('resize', resize);
+    };
+  }, [isDark, isLoggedIn]);
 
   // Sync theme to body class
   useEffect(() => {
@@ -437,11 +510,17 @@ export default function App() {
   };
 
   if (!isLoggedIn) {
-    return <Login onLoginSuccess={handleLoginSuccess} isDark={isDark} onThemeToggle={handleThemeToggle} />;
+    return (
+      <>
+        <canvas ref={canvasRef} className="global-canvas" />
+        <Login onLoginSuccess={handleLoginSuccess} isDark={isDark} onThemeToggle={handleThemeToggle} />
+      </>
+    );
   }
 
   return (
     <>
+      <canvas ref={canvasRef} className="global-canvas" />
       <Header 
         key={currentUser ? currentUser.email : 'guest'}
         activeSection={activeSection} 
