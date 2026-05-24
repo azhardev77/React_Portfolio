@@ -1,19 +1,23 @@
 // About component
 import aboutImg from '../assets/pic111.jpg';
+import { use3dTilt } from '../hooks/use3dTilt';
 
 export default function About() {
+  const imgCardTilt = use3dTilt(6, 1.01);
+  const textCardTilt = use3dTilt(6, 1.01);
+
   return (
     <section className="about section" id="about">
       <h2 className="section-title reveal fade-up">About</h2>
 
       <div className="about__container bd-grid">
-        <div className="about__img-wrapper reveal fade-right">
-          <div className="about__img">
+        <div {...imgCardTilt} className="about__img-wrapper reveal fade-right">
+          <div className="about__img" style={{ transform: 'translateZ(25px)' }}>
             <img src={aboutImg} alt="Mohd Azhar Mansoori" />
           </div>
 
           {/* Mini Core Tech Badges */}
-          <div className="about__tech-badges">
+          <div className="about__tech-badges" style={{ transform: 'translateZ(35px)' }}>
             <div className="tech-badge badge-java" title="Java Specialist">
               <i className="bx bxl-java"></i>
               <span>Java</span>
@@ -33,16 +37,16 @@ export default function About() {
           </div>
         </div>
 
-        <div>
-          <h2 className="about__subtitle reveal fade-left delay-200">Mohd Azhar Mansoori</h2>
+        <div {...textCardTilt} className="about__card reveal fade-left delay-200">
+          <h2 className="about__subtitle" style={{ transform: 'translateZ(20px)' }}>Mohd Azhar Mansoori</h2>
 
-          <p className="about__text reveal fade-up delay-300">
+          <p className="about__text" style={{ transform: 'translateZ(10px)' }}>
             I am an experienced Full-Stack Software Developer with over 4 years of expertise in designing and building robust web applications. Specialized in Java, Spring Boot, React.js, and SQL, I focus on clean code practices, performance optimization, and modular software architectures.
             <br /><br />
             Through rigorous training at Scaler Academy, I have refined my skills in advanced Data Structures, Algorithms, and Object-Oriented design patterns. I enjoy solving complex business logic problems, optimizing database queries, and designing scalable system components that handle traffic and load gracefully.
           </p>
 
-          <div className="about__social reveal fade-up delay-400">
+          <div className="about__social" style={{ transform: 'translateZ(25px)' }}>
             <a href="https://linkedin.com/in/azhardev77" target="_blank" rel="noopener noreferrer" className="footer__social" title="LinkedIn">
               <i className="bx bxl-linkedin"></i>
             </a>

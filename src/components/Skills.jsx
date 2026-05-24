@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { use3dTilt } from '../hooks/use3dTilt';
 
 const skillCategories = [
   {
@@ -48,6 +49,40 @@ const skillCategories = [
   }
 ];
 
+function SkillCard({ category, catIdx, animate }) {
+  const tilt = use3dTilt(6, 1.01);
+  return (
+    <div 
+      {...tilt}
+      className={`skills__category-card reveal fade-up delay-${(catIdx + 1) * 100} ${category.colorClass}`}
+    >
+      <div className="category-header" style={{ transform: 'translateZ(25px)' }}>
+        <i className={category.icon}></i>
+        <h3>{category.title}</h3>
+      </div>
+      <div className="category-skills" style={{ transform: 'translateZ(15px)' }}>
+        {category.skills.map((skill, skillIdx) => (
+          <div key={skillIdx} className="skill-badge-item">
+            <div className="skill-badge-info">
+              <span className="skill-badge-name">{skill.name}</span>
+              <span className="skill-badge-level">{skill.level}</span>
+            </div>
+            <div className="skill-badge-bar">
+              <div 
+                className="skill-badge-progress" 
+                style={{ 
+                  width: animate ? skill.level : '0%', 
+                  transition: 'width 1.2s cubic-bezier(0.1, 0.76, 0.55, 0.94)' 
+                }}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Skills() {
   const [animate, setAnimate] = useState(false);
   const sectionRef = useRef(null);
@@ -83,34 +118,12 @@ export default function Skills() {
 
       <div className="skills__category-grid bd-grid">
         {skillCategories.map((category, catIdx) => (
-          <div 
+          <SkillCard 
             key={catIdx} 
-            className={`skills__category-card reveal fade-up delay-${(catIdx + 1) * 100} ${category.colorClass}`}
-          >
-            <div className="category-header">
-              <i className={category.icon}></i>
-              <h3>{category.title}</h3>
-            </div>
-            <div className="category-skills">
-              {category.skills.map((skill, skillIdx) => (
-                <div key={skillIdx} className="skill-badge-item">
-                  <div className="skill-badge-info">
-                    <span className="skill-badge-name">{skill.name}</span>
-                    <span className="skill-badge-level">{skill.level}</span>
-                  </div>
-                  <div className="skill-badge-bar">
-                    <div 
-                      className="skill-badge-progress" 
-                      style={{ 
-                        width: animate ? skill.level : '0%', 
-                        transition: 'width 1.2s cubic-bezier(0.1, 0.76, 0.55, 0.94)' 
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+            category={category} 
+            catIdx={catIdx} 
+            animate={animate} 
+          />
         ))}
       </div>
     </section>

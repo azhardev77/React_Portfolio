@@ -78,6 +78,12 @@ export default function Home({ isDark, onDownloadResume }) {
   return (
     <section className="home" id="home">
       <canvas ref={canvasRef} className="home-canvas" />
+      
+      {/* 3D Floating Ambient Shapes */}
+      <div className="floating-shape shape-sphere shape-1"></div>
+      <div className="floating-shape shape-ring shape-2"></div>
+      <div className="floating-shape shape-cube shape-3"></div>
+
       <div className="home__container bd-grid">
         <div className="home__data reveal fade-up">
           <span className="home__greeting">Hello, I'm</span>

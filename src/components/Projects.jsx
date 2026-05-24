@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { use3dTilt } from '../hooks/use3dTilt';
 import portfolioThumb from '../assets/portfolio_thumbnail.png';
 import parkingLotThumb from '../assets/parking_lot_thumbnail.png';
 
@@ -24,40 +24,18 @@ const projects = [
 ];
 
 function ProjectCard({ project, index }) {
-  const cardRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
-  };
-
-  const handleMouseLeave = () => {
-    const card = cardRef.current;
-    if (!card) return;
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-  };
+  const tilt = use3dTilt(8, 1.02);
 
   return (
     <div
-      ref={cardRef}
+      {...tilt}
       className={`project-card reveal fade-up delay-${(index + 1) * 100}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ transition: 'transform 0.15s ease-out, box-shadow 0.3s ease' }}
     >
-      <div className="project-card__img-wrapper">
+      <div className="project-card__img-wrapper" style={{ transform: 'translateZ(30px)' }}>
         <img src={project.src} alt={project.alt} loading="lazy" className="project-card__img" />
       </div>
       
-      <div className="project-card__content">
+      <div className="project-card__content" style={{ transform: 'translateZ(15px)' }}>
         <h3 className="project-card__title">{project.title}</h3>
         <p className="project-card__desc">{project.desc}</p>
         
