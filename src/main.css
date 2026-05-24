@@ -1123,20 +1123,42 @@ body.dark .footer__link:hover {
         height: calc(var(--header-height) + 1rem);
     }
     
-    .nav__list{
+    .nav__list {
         display: flex;
         flex-direction: row;
         align-items: center; /* aligns toggle & links */
         row-gap: 0;
+        column-gap: 1.5rem;
         width: auto;
     }
-    .nav__item{
-        margin-left: var(--mb-4);
+    .nav__item {
+        margin-left: 0 !important;
         margin-bottom: 0;
     }
     .nav__itemdm {
         margin-top: 0;
-        margin-left: 1.2rem;
+        margin-left: 0 !important;
+    }
+
+    /* Prevent clipping on narrower viewports or mobile desktop mode simulators */
+    @media screen and (max-width: 1100px) {
+        .nav__list {
+            column-gap: 0.85rem !important;
+        }
+        .nav__logo {
+            letter-spacing: 0.2em !important;
+            font-size: 1.15rem !important;
+        }
+        .nav__link {
+            font-size: 0.85rem !important;
+        }
+        .resume-btn {
+            font-size: 0.85rem !important;
+        }
+        .guest-timer-capsule {
+            font-size: 0.7rem !important;
+            padding: 3px 8px !important;
+        }
     }
     .nav__toggle{
         display: none;
