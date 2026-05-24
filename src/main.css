@@ -2824,6 +2824,8 @@ body.dark .home__tagline {
     padding: 8px;
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--color-purple) 100%);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: float3d 4s ease-in-out infinite;
+    transform-style: preserve-3d;
 }
 
 .home__img {
@@ -2832,6 +2834,8 @@ body.dark .home__tagline {
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--card-bg);
+    animation: none !important;
+    box-shadow: none !important;
 }
 
 .home__img-glow {
