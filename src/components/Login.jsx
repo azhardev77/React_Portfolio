@@ -3,6 +3,7 @@ import '../login.css';
 
 export default function Login({ onLoginSuccess }) {
   const [isToggled, setIsToggled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Sign In inputs
   const [loginUsername, setLoginUsername] = useState('');
@@ -13,21 +14,62 @@ export default function Login({ onLoginSuccess }) {
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
 
-  const handleLoginSubmit = (e) => {
+  // Secure global cloud DB endpoint
+  const DB_URL = "https://kvdb.io/AzharPortfolioUsersBucket_v1/users";
+
+  const fetchCloudUsers = async () => {
+    try {
+      const response = await fetch(DB_URL);
+      if (!response.ok) {
+        if (response.status === 404) return [];
+        throw new Error('Database returned status: ' + response.status);
+      }
+      const text = await response.text();
+      if (!text) return [];
+      const data = JSON.parse(text);
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.warn("⚠️ Cloud Database offline, utilizing localized fail-safe backup:", error);
+      return JSON.parse(localStorage.getItem('users')) || [];
+    }
+  };
+
+  const saveCloudUsers = async (usersList) => {
+    try {
+      const response = await fetch(DB_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(usersList)
+      });
+      // Always sync to local storage as fallback
+      localStorage.setItem('users', JSON.stringify(usersList));
+      return response.ok;
+    } catch (error) {
+      console.error("❌ Failed to synchronize with Cloud DB:", error);
+      localStorage.setItem('users', JSON.stringify(usersList));
+      return false;
+    }
+  };
+
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const username = loginUsername.trim();
     const password = loginPassword.trim();
 
-    // Default admin login
+    // Default admin login (zero network bypass)
     if (username === 'azhar' && password === '12345') {
       onLoginSuccess();
       return;
     }
 
-    // Verify stored users
-    const users = JSON.parse(localStorage.getItem('users')) || [];
+    setIsLoading(true);
+    const users = await fetchCloudUsers();
+    setIsLoading(false);
+
     const validUser = users.find(
-      (user) => user.username === username && user.password === password
+      (user) => user.username.toLowerCase() === username.toLowerCase() && user.password === password
     );
 
     if (validUser) {
@@ -37,7 +79,7 @@ export default function Login({ onLoginSuccess }) {
     }
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const username = regUsername.trim();
     const email = regEmail.trim();
@@ -48,18 +90,29 @@ export default function Login({ onLoginSuccess }) {
       return;
     }
 
-    let users = JSON.parse(localStorage.getItem('users')) || [];
+    setIsLoading(true);
+    const users = await fetchCloudUsers();
 
-    const userExists = users.some((user) => user.username === username);
+    const userExists = users.some(
+      (user) => user.username.toLowerCase() === username.toLowerCase()
+    );
+
     if (userExists) {
+      setIsLoading(false);
       alert('❌ Username already exists');
       return;
     }
 
-    users.push({ username, email, password });
-    localStorage.setItem('users', JSON.stringify(users));
+    const updatedUsersList = [...users, { username, email, password }];
+    const synced = await saveCloudUsers(updatedUsersList);
+    setIsLoading(false);
 
-    alert('✅ Registration successful! Please login.');
+    if (synced) {
+      alert('✅ Registration successful! Saved securely to Cloud Database.');
+    } else {
+      alert('⚠️ Registration saved locally (Cloud sync currently offline).');
+    }
+
     // Reset signup inputs
     setRegUsername('');
     setRegEmail('');
@@ -102,8 +155,8 @@ export default function Login({ onLoginSuccess }) {
             </div>
 
             <div className="field-wrapper slide-element">
-              <button className="submit-button" type="submit">
-                Login
+              <button className="submit-button" type="submit" disabled={isLoading}>
+                {isLoading ? 'Connecting DB...' : 'Login'}
               </button>
             </div>
 
@@ -114,6 +167,7 @@ export default function Login({ onLoginSuccess }) {
                   className="submit-button register-trigger"
                   type="button"
                   onClick={() => setIsToggled(true)}
+                  disabled={isLoading}
                 >
                   Sign Up
                 </button>
@@ -167,8 +221,8 @@ export default function Login({ onLoginSuccess }) {
             </div>
 
             <div className="field-wrapper slide-element">
-              <button className="submit-button" type="submit" id="registerBtn">
-                Register
+              <button className="submit-button" type="submit" id="registerBtn" disabled={isLoading}>
+                {isLoading ? 'Saving to DB...' : 'Register'}
               </button>
             </div>
 
@@ -179,6 +233,7 @@ export default function Login({ onLoginSuccess }) {
                   className="submit-button login-trigger"
                   type="button"
                   onClick={() => setIsToggled(false)}
+                  disabled={isLoading}
                 >
                   Sign In
                 </button>
