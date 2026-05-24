@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 import avatarImg from '../assets/Azhar.jpeg';
 
-export default function Home({ isDark }) {
+export default function Home({ isDark, onDownloadResume }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -79,16 +79,43 @@ export default function Home({ isDark }) {
     <section className="home" id="home">
       <canvas ref={canvasRef} className="home-canvas" />
       <div className="home__container bd-grid">
-        <h1 className="home__title reveal fade-up">
-          <span>Hello,</span>
-          <span><br />There.</span>
-        </h1>
-        <img
-          src={avatarImg}
-          alt="Mohd Azhar Mansoori"
-          loading="lazy"
-          className="home__img reveal fade-left delay-200"
-        />
+        <div className="home__data reveal fade-up">
+          <span className="home__greeting">Hello, I'm</span>
+          <h1 className="home__name">Mohd Azhar Mansoori</h1>
+          <h2 className="home__role">Full-Stack Software Developer <span className="role-divider">|</span> Java Backend Specialist</h2>
+          
+          <p className="home__tagline">
+            Crafting High-Performance Backends & Scalable Web Architectures
+          </p>
+          
+          <p className="home__description">
+            Specializing in building robust enterprise APIs, modern frontend interfaces, and optimized database layers. Dedicated to clean code, performance tuning, and highly scalable system designs.
+          </p>
+          
+          <div className="home__ctas">
+            <a href="#projects" className="home__cta-btn primary" title="Explore My Projects">
+              <i className="bx bx-folder"></i> View Projects
+            </a>
+            <button onClick={onDownloadResume} className="home__cta-btn secondary" title="Print Professional ATS Resume">
+              <i className="bx bx-download"></i> Get Resume
+            </button>
+            <a href="#contact" className="home__cta-btn text-link" title="Send Me a Message">
+              Contact Me <i className="bx bx-right-arrow-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <div className="home__img-container reveal fade-left delay-200">
+          <div className="home__img-wrapper">
+            <img
+              src={avatarImg}
+              alt="Mohd Azhar Mansoori"
+              loading="lazy"
+              className="home__img"
+            />
+            <div className="home__img-glow"></div>
+          </div>
+        </div>
       </div>
     </section>
   );

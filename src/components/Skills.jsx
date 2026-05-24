@@ -1,59 +1,52 @@
 import React, { useEffect, useState, useRef } from 'react';
-import skillsImg from '../assets/skills.png';
 
-const skillsList = [
-  { name: 'Java', level: '85%' },
-  { name: 'Spring Boot', level: '80%' },
-  { name: 'React', level: '75%' },
-  { name: 'Redux', level: '70%' },
-  { name: 'JavaScript', level: '80%' },
-  { name: 'HTML & CSS', level: '85%' },
-  { name: 'SQL', level: '80%' },
-  { name: 'REST API', level: '80%' },
-  { name: 'Git & GitHub', level: '85%' },
-  { name: 'MVC', level: '75%' },
-  { name: 'PHP & Laravel', level: '75%' }
+const skillCategories = [
+  {
+    title: 'Backend Engineering',
+    icon: 'bx bx-server',
+    colorClass: 'backend',
+    skills: [
+      { name: 'Java', level: '85%' },
+      { name: 'Spring Boot', level: '80%' },
+      { name: 'PHP & Laravel', level: '75%' },
+      { name: 'REST APIs', level: '80%' },
+      { name: 'MVC Architecture', level: '75%' }
+    ]
+  },
+  {
+    title: 'Frontend Web',
+    icon: 'bx bx-code-alt',
+    colorClass: 'frontend',
+    skills: [
+      { name: 'React.js', level: '75%' },
+      { name: 'Redux State', level: '70%' },
+      { name: 'JavaScript (ES6+)', level: '80%' },
+      { name: 'HTML5 & CSS3', level: '85%' }
+    ]
+  },
+  {
+    title: 'Database & Systems',
+    icon: 'bx bx-data',
+    colorClass: 'database',
+    skills: [
+      { name: 'SQL', level: '80%' },
+      { name: 'MySQL', level: '80%' },
+      { name: 'Schema Design', level: '75%' },
+      { name: 'Query Optimization', level: '70%' }
+    ]
+  },
+  {
+    title: 'Tools & Workflows',
+    icon: 'bx bx-cog',
+    colorClass: 'tools',
+    skills: [
+      { name: 'Git & GitHub', level: '85%' },
+      { name: 'Vite & Bundlers', level: '75%' },
+      { name: 'Postman API Testing', level: '80%' },
+      { name: 'SOLID Principles', level: '80%' }
+    ]
+  }
 ];
-
-function SkillItem({ name, level, animate, index }) {
-  const progressRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    if (progressRef.current) {
-      progressRef.current.style.setProperty('--glow-x', `${x}%`);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (progressRef.current) {
-      progressRef.current.style.setProperty('--glow-x', '50%');
-    }
-  };
-
-  // Calculate a staggered delay class up to 500ms
-  const delayClass = `delay-${(index % 6 + 1) * 100}`;
-
-  return (
-    <div className={`skills__data reveal fade-up ${delayClass}`}>
-      <div className="skills__names">
-        <span className="skills_name">{name}</span>
-      </div>
-      <div
-        className="skill-bar"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div
-          ref={progressRef}
-          className="skills-progress"
-          style={{ width: animate ? level : '0%', transition: 'width 1s ease-out' }}
-        ></div>
-      </div>
-    </div>
-  );
-}
 
 export default function Skills() {
   const [animate, setAnimate] = useState(false);
@@ -66,7 +59,7 @@ export default function Skills() {
           setAnimate(true);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -83,25 +76,41 @@ export default function Skills() {
   return (
     <section className="skills section" id="skills" ref={sectionRef}>
       <h2 className="section-title reveal fade-up">Skills</h2>
+      <p className="section-subtitle reveal fade-up delay-100" style={{ textAlign: 'center', marginBottom: '2.5rem', color: 'var(--text-color-light)' }}>
+        A structured overview of my technology stack, specializing in backend frameworks and modern full-stack systems.
+      </p>
 
-      <div className="skills__container bd-grid">
-        <div className="skills__box">
-          <h3 className="skills__subtitle reveal fade-right">Technical</h3>
-
-          {skillsList.map((skill, idx) => (
-            <SkillItem
-              key={idx}
-              index={idx}
-              name={skill.name}
-              level={skill.level}
-              animate={animate}
-            />
-          ))}
-        </div>
-
-        <div className="skills__img reveal fade-left delay-300">
-          <img src={skillsImg} alt="Skills Graphic" loading="lazy" />
-        </div>
+      <div className="skills__category-grid bd-grid">
+        {skillCategories.map((category, catIdx) => (
+          <div 
+            key={catIdx} 
+            className={`skills__category-card reveal fade-up delay-${(catIdx + 1) * 100} ${category.colorClass}`}
+          >
+            <div className="category-header">
+              <i className={category.icon}></i>
+              <h3>{category.title}</h3>
+            </div>
+            <div className="category-skills">
+              {category.skills.map((skill, skillIdx) => (
+                <div key={skillIdx} className="skill-badge-item">
+                  <div className="skill-badge-info">
+                    <span className="skill-badge-name">{skill.name}</span>
+                    <span className="skill-badge-level">{skill.level}</span>
+                  </div>
+                  <div className="skill-badge-bar">
+                    <div 
+                      className="skill-badge-progress" 
+                      style={{ 
+                        width: animate ? skill.level : '0%', 
+                        transition: 'width 1.2s cubic-bezier(0.1, 0.76, 0.55, 0.94)' 
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
