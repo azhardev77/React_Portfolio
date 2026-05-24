@@ -945,7 +945,6 @@ body.dark .skill-bar {
 
 /* ===== CONTACT =====*/
 .contact__container{
-     background-color: var(--bg-color);
     row-gap: 2rem;
 }
 .contact__subtitle{
@@ -2389,40 +2388,62 @@ body.dark .contact {
 }
 
 .contact__container {
-    max-width: 900px;
+    max-width: 960px;
     margin: 0 auto;
-    padding: 2rem 1.5rem 4rem 1.5rem !important;
+    background-color: rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(14, 165, 233, 0.08);
+    border-radius: 24px !important;
+    padding: 3rem 2.5rem !important;
+    row-gap: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.01);
+}
+
+body.dark .contact__container {
+    background-color: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(0, 245, 255, 0.08);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .contact__info,
 .contact__form {
-    background: rgba(255,255,255,0.6);
-    border: 1px solid rgba(14,165,233,0.15);
-    border-radius: 24px !important;
-    padding: 3rem 2.5rem !important;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(14, 165, 233, 0.12);
+    border-radius: 20px !important;
+    padding: 2.5rem 2rem !important;
     backdrop-filter: blur(8px);
     overflow: hidden !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 }
+
 body.dark .contact__info,
 body.dark .contact__form {
-    background: rgba(13,27,46,0.7);
-    border-color: rgba(0,245,255,0.12);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04) !important;
-    border-radius: 24px !important;
+    background: rgba(30, 41, 59, 0.55);
+    border-color: rgba(0, 245, 255, 0.1) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+    border-radius: 20px !important;
 }
 
 @media screen and (max-width: 968px) {
+    .contact__container {
+        padding: 2.5rem 1.75rem !important;
+        border-radius: 20px !important;
+    }
     .contact__info,
     .contact__form {
-        padding: 2.5rem 1.75rem !important;
+        padding: 2rem 1.5rem !important;
+        border-radius: 16px !important;
     }
 }
 
 @media screen and (max-width: 480px) {
+    .contact__container {
+        padding: 1.75rem 1rem !important;
+        border-radius: 16px !important;
+    }
     .contact__info,
     .contact__form {
-        padding: 2rem 1.25rem !important;
+        padding: 1.5rem 1rem !important;
+        border-radius: 12px !important;
     }
 }
 
