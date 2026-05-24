@@ -16,7 +16,7 @@ export default function Login({ onLoginSuccess }) {
   const [regPhone, setRegPhone] = useState('');
 
   // Secure global cloud DB endpoint
-  const DB_URL = "https://kvdb.io/AzharPortfolioUsersBucket_v1/users";
+  const DB_URL = "https://kvdb.io/JdNFFp7sNAmHmADV83gKko/users";
 
   const fetchCloudUsers = async () => {
     try {
