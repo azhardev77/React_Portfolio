@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { use3dTilt } from '../hooks/use3dTilt';
 import '../login.css';
 
 export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
   const [isToggled, setIsToggled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const tilt = use3dTilt(6, 1.01);
 
   // Sign In inputs
   const [loginUsername, setLoginUsername] = useState('');
@@ -153,15 +155,15 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
       <div className="login-theme-toggle" onClick={onThemeToggle} title="Toggle Theme">
         <i className={isDark ? "bx bx-sun" : "bx bx-moon"}></i>
       </div>
-      <div className={`auth-wrapper ${isToggled ? 'toggled' : ''}`}>
+      <div {...tilt} className={`auth-wrapper ${isToggled ? 'toggled' : ''}`} style={{ ...tilt.style }}>
         <div className="background-shape"></div>
         <div className="secondary-shape"></div>
 
         {/* ===== SIGN IN PANEL ===== */}
-        <div className="credentials-panel signin">
-          <h2 className="slide-element">Login</h2>
-          <form id="loginForm" onSubmit={handleLoginSubmit}>
-            <div className="field-wrapper slide-element">
+        <div className="credentials-panel signin" style={{ transformStyle: 'preserve-3d' }}>
+          <h2 className="slide-element" style={{ transform: 'translateZ(30px)' }}>Login</h2>
+          <form id="loginForm" onSubmit={handleLoginSubmit} style={{ transformStyle: 'preserve-3d' }}>
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
               <input
                 type="text"
                 id="loginUsername"
@@ -173,7 +175,7 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
               <i className="fa-solid fa-user"></i>
             </div>
 
-            <div className="field-wrapper slide-element">
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
               <input
                 type="password"
                 id="loginPassword"
@@ -185,13 +187,13 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
               <i className="fa-solid fa-lock"></i>
             </div>
 
-            <div className="field-wrapper slide-element">
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(20px)' }}>
               <button className="submit-button" type="submit" disabled={isLoading}>
                 {isLoading ? 'Connecting DB...' : 'Login'}
               </button>
             </div>
 
-            <div className="switch-link slide-element">
+            <div className="switch-link slide-element" style={{ transform: 'translateZ(15px)' }}>
               <p>
                 Don't have an account? <br />
                 <button
@@ -207,15 +209,15 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
           </form>
         </div>
 
-        <div className="welcome-section signin">
-          <h2 className="slide-element">WELCOME BACK!</h2>
+        <div className="welcome-section signin" style={{ transformStyle: 'preserve-3d' }}>
+          <h2 className="slide-element" style={{ transform: 'translateZ(35px)' }}>WELCOME BACK!</h2>
         </div>
 
         {/* ===== SIGN UP PANEL ===== */}
-        <div className="credentials-panel signup">
-          <h2 className="slide-element">Register</h2>
-          <form id="registerForm" onSubmit={handleRegisterSubmit}>
-            <div className="field-wrapper slide-element">
+        <div className="credentials-panel signup" style={{ transformStyle: 'preserve-3d' }}>
+          <h2 className="slide-element" style={{ transform: 'translateZ(30px)' }}>Register</h2>
+          <form id="registerForm" onSubmit={handleRegisterSubmit} style={{ transformStyle: 'preserve-3d' }}>
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
               <input
                 type="text"
                 id="regUsername"
@@ -227,7 +229,7 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
               <i className="fa-solid fa-user"></i>
             </div>
 
-            <div className="field-wrapper slide-element">
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
               <input
                 type="email"
                 id="regEmail"
@@ -239,7 +241,7 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
               <i className="fa-solid fa-envelope"></i>
             </div>
 
-            <div className="field-wrapper slide-element">
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
               <input
                 type="password"
                 id="regPassword"
@@ -251,7 +253,7 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
               <i className="fa-solid fa-lock"></i>
             </div>
 
-            <div className="field-wrapper slide-element">
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(15px)' }}>
               <input
                 type="text"
                 id="regPhone"
@@ -263,13 +265,13 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
               <i className="fa-solid fa-phone"></i>
             </div>
 
-            <div className="field-wrapper slide-element">
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(20px)' }}>
               <button className="submit-button" type="submit" id="registerBtn" disabled={isLoading}>
                 {isLoading ? 'Saving to DB...' : 'Register'}
               </button>
             </div>
 
-            <div className="switch-link slide-element">
+            <div className="switch-link slide-element" style={{ transform: 'translateZ(15px)' }}>
               <p>
                 Already have an account? <br />
                 <button
@@ -285,8 +287,8 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
           </form>
         </div>
 
-        <div className="welcome-section signup">
-          <h2 className="slide-element welcome-text">
+        <div className="welcome-section signup" style={{ transformStyle: 'preserve-3d' }}>
+          <h2 className="slide-element welcome-text" style={{ transform: 'translateZ(35px)' }}>
             WELCOME! <br />
             GET STARTED
           </h2>
