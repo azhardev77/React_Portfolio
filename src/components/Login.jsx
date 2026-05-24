@@ -223,7 +223,7 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                   cursor: 'pointer'
                 }}
               >
-                <i className="bx bx-user" style={{ marginRight: '6px', fontSize: '1rem', verticalAlign: 'middle' }}></i> Guest Login
+                Guest Login
               </button>
             </div>
 
