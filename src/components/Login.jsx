@@ -219,7 +219,7 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
                   color: '#ffffff',
                   boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)',
                   border: 'none',
-                  borderRadius: '4px',
+                  borderRadius: '40px',
                   cursor: 'pointer'
                 }}
               >
