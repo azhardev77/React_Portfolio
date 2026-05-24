@@ -632,3 +632,141 @@
             
             transition: background-color 5000s ease-in-out 0s;
         }
+
+    /* Floating Theme Switcher button for Login */
+    .login-theme-toggle {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .login-theme-toggle i {
+        font-size: 24px;
+        color: #fff;
+        transition: transform 0.5s ease;
+    }
+
+    .login-theme-toggle:hover {
+        transform: scale(1.1);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 15px rgba(90, 129, 138, 0.4);
+    }
+
+    /* ==========================================================================
+       LIGHT THEME ADAPTIVE STYLES (MATCHES LIGHT PORTFOLIO AESTHETICS)
+       ========================================================================== */
+    body:not(.dark) .auth-page-wrapper {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    body:not(.dark) .auth-page-wrapper * {
+        color: #2c3e50;
+    }
+
+    body:not(.dark) .login-theme-toggle {
+        background: rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    body:not(.dark) .login-theme-toggle i {
+        color: #2c3e50;
+    }
+
+    body:not(.dark) .login-theme-toggle:hover {
+        background: rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    body:not(.dark) .auth-wrapper {
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 12px;
+    }
+
+    body:not(.dark) .auth-wrapper .background-shape {
+        background: linear-gradient(45deg, #e0e6ed, #93c5fd); /* Light pastel sky gradients */
+        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    body:not(.dark) .auth-wrapper .secondary-shape {
+        background: #f5f7fa;
+        border-top: 3px solid #93c5fd;
+    }
+
+    body:not(.dark) .field-wrapper input {
+        color: #2c3e50;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+    }
+
+    body:not(.dark) .field-wrapper input:focus,
+    body:not(.dark) .field-wrapper input:valid {
+        border-bottom: 2px solid #3b82f6; /* Modern Blue focal accent */
+    }
+
+    body:not(.dark) .field-wrapper label {
+        color: #718096;
+    }
+
+    body:not(.dark) .field-wrapper input:focus~label,
+    body:not(.dark) .field-wrapper input:valid~label {
+        color: #3b82f6;
+    }
+
+    body:not(.dark) .field-wrapper i {
+        color: #718096;
+    }
+
+    body:not(.dark) .field-wrapper input:focus~i,
+    body:not(.dark) .field-wrapper input:valid~i {
+        color: #3b82f6;
+    }
+
+    body:not(.dark) .submit-button {
+        border: 2px solid #3b82f6;
+        color: #3b82f6 !important;
+        background: transparent;
+        transition: all 0.3s ease;
+    }
+
+    body:not(.dark) .submit-button::before {
+        background: linear-gradient(#f5f7fa, #93c5fd, #f5f7fa, #93c5fd);
+    }
+
+    body:not(.dark) .submit-button:hover {
+        color: #1e3a8a !important;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    body:not(.dark) .switch-link button {
+        color: #3b82f6 !important;
+    }
+
+    body:not(.dark) .switch-link p,
+    body:not(.dark) .switch-link button,
+    body:not(.dark) .credentials-panel h2,
+    body:not(.dark) .welcome-section h2 {
+        color: #2c3e50 !important;
+    }
+
+    body:not(.dark) input:-webkit-autofill,
+    body:not(.dark) input:-webkit-autofill:hover,
+    body:not(.dark) input:-webkit-autofill:focus,
+    body:not(.dark) input:-webkit-autofill:active {
+        -webkit-text-fill-color: #2c3e50 !important;
+    }

@@ -125,7 +125,7 @@ export default function App() {
   };
 
   if (!isLoggedIn) {
-    return <Login onLoginSuccess={handleLoginSuccess} />;
+    return <Login onLoginSuccess={handleLoginSuccess} isDark={isDark} onThemeToggle={handleThemeToggle} />;
   }
 
   return (

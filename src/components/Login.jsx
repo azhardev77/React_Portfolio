@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../login.css';
 
-export default function Login({ onLoginSuccess }) {
+export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
   const [isToggled, setIsToggled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -150,6 +150,9 @@ export default function Login({ onLoginSuccess }) {
 
   return (
     <div className="auth-page-wrapper">
+      <div className="login-theme-toggle" onClick={onThemeToggle} title="Toggle Theme">
+        <i className={isDark ? "bx bx-sun" : "bx bx-moon"}></i>
+      </div>
       <div className={`auth-wrapper ${isToggled ? 'toggled' : ''}`}>
         <div className="background-shape"></div>
         <div className="secondary-shape"></div>
