@@ -116,7 +116,7 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
               </button>
             </li>
 
-            <li className="nav__item">
+            <li className="nav__item" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <div 
                 className="nav__profile-trigger" 
                 onClick={() => setIsProfileOpen(true)}
@@ -124,8 +124,12 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
                 style={{
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   cursor: 'pointer',
-                  marginLeft: '8px'
+                  marginLeft: '8px',
+                  width: '32px',
+                  height: '32px',
+                  flexShrink: 0
                 }}
               >
                 <img 
@@ -134,11 +138,14 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
                   style={{
                     width: '32px',
                     height: '32px',
+                    minWidth: '32px',
+                    minHeight: '32px',
                     borderRadius: '50%',
                     border: '2px solid #00d2ff',
                     objectFit: 'cover',
                     boxShadow: '0 0 8px rgba(0, 210, 255, 0.4)',
-                    transition: 'transform 0.2s'
+                    transition: 'transform 0.2s',
+                    flexShrink: 0
                   }}
                   onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                   onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1.0)'}
