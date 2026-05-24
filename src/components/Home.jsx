@@ -1,6 +1,5 @@
 // Home component
 import { useEffect, useRef } from 'react';
-import avatarImg from '../assets/Azhar.jpeg';
 
 export default function Home({ isDark, onDownloadResume }) {
   const canvasRef = useRef(null);
@@ -108,18 +107,6 @@ export default function Home({ isDark, onDownloadResume }) {
             <a href="#contact" className="home__cta-btn text-link" title="Send Me a Message">
               Contact Me <i className="bx bx-right-arrow-alt"></i>
             </a>
-          </div>
-        </div>
-
-        <div className="home__img-container reveal fade-left delay-200">
-          <div className="home__img-wrapper">
-            <img
-              src={avatarImg}
-              alt="Mohd Azhar Mansoori"
-              loading="lazy"
-              className="home__img"
-            />
-            <div className="home__img-glow"></div>
           </div>
         </div>
       </div>

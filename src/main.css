@@ -2730,19 +2730,23 @@ body:not(.dark) .profile-modal-divider {
 /* 1. HERO SECTION SPLIT LAYOUT */
 .home__container {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-columns: 1fr;
     align-items: center;
+    justify-content: center;
     gap: 3rem;
     padding: 6rem 0 4rem 0;
     min-height: calc(100vh - var(--header-height));
     z-index: 1;
+    max-width: 840px !important;
+    margin: 0 auto !important;
 }
 
 .home__data {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: left;
+    align-items: center;
+    text-align: center;
 }
 
 .home__greeting {
@@ -2773,6 +2777,7 @@ body:not(.dark) .profile-modal-divider {
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
 }
@@ -2799,12 +2804,15 @@ body.dark .home__tagline {
     color: var(--color-muted);
     line-height: 1.8;
     margin-bottom: 2.5rem;
-    max-width: 620px;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .home__ctas {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1.5rem;
     flex-wrap: wrap;
 }
