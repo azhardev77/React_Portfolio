@@ -5,7 +5,7 @@ import cloud3 from '../assets/cloud_3.svg';
 import cloud4 from '../assets/cloud_4.svg';
 import stars from '../assets/stars.svg';
 
-export default function Header({ activeSection, isDark, onThemeToggle }) {
+export default function Header({ activeSection, isDark, onThemeToggle, onLogout }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const getLinkClass = (section) => {
@@ -330,6 +330,31 @@ export default function Header({ activeSection, isDark, onThemeToggle }) {
                 title="Download ATS Resume"
               >
                 <i className="bx bx-download"></i> Resume
+              </button>
+            </li>
+
+            <li className="nav__item">
+              <button 
+                onClick={onLogout} 
+                className="nav__link logout-btn" 
+                title="Logout"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  backgroundColor: '#dc3545',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '6px 12px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  fontSize: '9pt',
+                  marginLeft: '8px',
+                  transition: 'background-color 0.2s'
+                }}
+              >
+                <i className="bx bx-log-out" style={{ fontSize: '11pt' }}></i> Logout
               </button>
             </li>
 

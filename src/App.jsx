@@ -100,13 +100,23 @@ export default function App() {
     setIsDark((prev) => !prev);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+  };
+
   if (!isLoggedIn) {
     return <Login onLoginSuccess={handleLoginSuccess} />;
   }
 
   return (
     <>
-      <Header activeSection={activeSection} isDark={isDark} onThemeToggle={handleThemeToggle} />
+      <Header 
+        activeSection={activeSection} 
+        isDark={isDark} 
+        onThemeToggle={handleThemeToggle} 
+        onLogout={handleLogout} 
+      />
       
       <main className="l-main">
         <Home isDark={isDark} />
