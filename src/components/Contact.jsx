@@ -8,7 +8,7 @@ export default function Contact() {
   const formTilt = use3dTilt(6, 1.01);
 
   const copyEmail = () => {
-    const email = 'azharmansori779@gmail.com';
+    const email = 'azhardev97@gmail.com';
     navigator.clipboard.writeText(email).then(() => {
       setEmailFeedback('Email copied ✔');
       setTimeout(() => {
@@ -43,13 +43,13 @@ export default function Contact() {
           <h3 className="contact__subtitle" style={{ transform: 'translateZ(20px)' }}>EMAIL</h3>
           <div className="contact__email-box" style={{ transform: 'translateZ(10px)' }}>
             <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=azharmansori779@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=azhardev97@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
               className="contact__email-text"
               title="Open in Gmail"
             >
-              azharmansori779@gmail.com
+              azhardev97@gmail.com
             </a>
             <span
               className="contact__email-icon copy"
@@ -59,7 +59,7 @@ export default function Contact() {
               <i className="bx bx-clipboard"></i>
             </span>
             <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=azharmansori779@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=azhardev97@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
               className="contact__email-icon gmail"

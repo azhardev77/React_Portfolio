@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="footer__data">
           <h2 className="footer__title">Azhar</h2>
           <p className="footer__text">I'm Azhar and this is my Portfolio website</p>
-          <a href="mailto:azharmansori779@gmail.com" className="footer__social">
+          <a href="mailto:azhardev97@gmail.com" className="footer__social">
             <i className="bx bx-mail-send"></i>
           </a>
         </div>
