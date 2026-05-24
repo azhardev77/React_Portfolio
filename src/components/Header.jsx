@@ -11,17 +11,17 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   // Profile forms states
-  const [profileName, setProfileName] = useState(currentUser ? currentUser.username : '');
-  const [profilePassword, setProfilePassword] = useState(currentUser ? currentUser.password : '');
-  const [profilePhone, setProfilePhone] = useState(currentUser ? currentUser.phone : '');
+  const [profileName, setProfileName] = useState(currentUser ? (currentUser.username || '') : '');
+  const [profilePassword, setProfilePassword] = useState(currentUser ? (currentUser.password || '') : '');
+  const [profilePhone, setProfilePhone] = useState(currentUser ? (currentUser.phone || '') : '');
   const [isUpdating, setIsUpdating] = useState(false);
 
   // Sync profile forms whenever active user changes
   useEffect(() => {
     if (currentUser) {
-      setProfileName(currentUser.username);
-      setProfilePassword(currentUser.password);
-      setProfilePhone(currentUser.phone);
+      setProfileName(currentUser.username || '');
+      setProfilePassword(currentUser.password || '');
+      setProfilePhone(currentUser.phone || '');
     }
   }, [currentUser]);
 
