@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import cloud1 from '../assets/cloud_1.svg';
 import cloud2 from '../assets/cloud_2.svg';
 import cloud3 from '../assets/cloud_3.svg';
@@ -16,8 +16,41 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
   const [profilePhone, setProfilePhone] = useState(currentUser ? (currentUser.phone || '') : '');
   const [isUpdating, setIsUpdating] = useState(false);
 
+  // Real-time Guest session countdown state
+  const [timeLeft, setTimeLeft] = useState(() => {
+    if (currentUser?.isGuest && currentUser?.loginTime) {
+      const elapsed = Date.now() - currentUser.loginTime;
+      const remaining = Math.max(0, 15 * 60 * 1000 - elapsed);
+      return Math.floor(remaining / 1000);
+    }
+    return 0;
+  });
+
+  useEffect(() => {
+    if (!currentUser?.isGuest || !currentUser?.loginTime) return;
+
+    const timer = setInterval(() => {
+      const elapsed = Date.now() - currentUser.loginTime;
+      const remaining = Math.max(0, 15 * 60 * 1000 - elapsed);
+      const secs = Math.floor(remaining / 1000);
+      setTimeLeft(secs);
+      if (secs <= 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [currentUser]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   const handleProfileSave = async (e) => {
     e.preventDefault();
+    if (currentUser?.isGuest) return; // Fail-safe
     const name = profileName.trim();
     const password = profilePassword.trim();
     const phone = profilePhone.trim();
@@ -116,6 +149,27 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
               </button>
             </li>
 
+            {currentUser?.isGuest && (
+              <li className="nav__item" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <span className="guest-timer-capsule" style={{
+                  background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                  color: '#ffffff',
+                  fontSize: '0.75rem',
+                  fontWeight: '700',
+                  padding: '4px 10px',
+                  borderRadius: '12px',
+                  boxShadow: '0 0 10px rgba(239, 68, 68, 0.45)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  marginRight: '6px',
+                  userSelect: 'none'
+                }}>
+                  <i className="bx bx-time" style={{ fontSize: '0.9rem' }}></i> {formatTime(timeLeft)}
+                </span>
+              </li>
+            )}
+
             <li className="nav__item" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <div 
                 className="nav__profile-trigger" 
@@ -204,6 +258,7 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
                   onChange={(e) => setProfileName(e.target.value)}
                   required
                   placeholder="Enter your name"
+                  disabled={currentUser?.isGuest}
                 />
               </div>
               
@@ -215,6 +270,7 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
                   onChange={(e) => setProfilePassword(e.target.value)}
                   required
                   placeholder="Enter password"
+                  disabled={currentUser?.isGuest}
                 />
               </div>
               
@@ -226,11 +282,17 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
                   onChange={(e) => setProfilePhone(e.target.value)}
                   required
                   placeholder="Enter phone number"
+                  disabled={currentUser?.isGuest}
                 />
               </div>
               
-              <button type="submit" className="profile-save-btn" disabled={isUpdating}>
-                {isUpdating ? 'Saving to Cloud DB...' : 'Save Changes'}
+              <button 
+                type="submit" 
+                className="profile-save-btn" 
+                disabled={isUpdating || currentUser?.isGuest} 
+                style={currentUser?.isGuest ? { background: '#64748b', cursor: 'not-allowed', opacity: 0.8 } : {}}
+              >
+                {currentUser?.isGuest ? '🔐 Read-Only Guest Mode' : (isUpdating ? 'Saving to Cloud DB...' : 'Save Changes')}
               </button>
             </form>
             

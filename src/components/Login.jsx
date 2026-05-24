@@ -150,6 +150,17 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
     setIsToggled(false); // Switch to sign in view
   };
 
+  const handleGuestLogin = () => {
+    onLoginSuccess({
+      username: 'Guest User',
+      email: 'guest@portfolio.com',
+      password: 'N/A',
+      phone: 'N/A',
+      isGuest: true,
+      loginTime: Date.now()
+    });
+  };
+
   return (
     <div className="auth-page-wrapper">
       <div className="login-theme-toggle" onClick={onThemeToggle} title="Toggle Theme">
@@ -190,6 +201,29 @@ export default function Login({ onLoginSuccess, isDark, onThemeToggle }) {
             <div className="field-wrapper slide-element" style={{ transform: 'translateZ(20px)' }}>
               <button className="submit-button" type="submit" disabled={isLoading}>
                 {isLoading ? 'Connecting DB...' : 'Login'}
+              </button>
+            </div>
+
+            <div className="guest-divider slide-element" style={{ transform: 'translateZ(15px)', textAlign: 'center', margin: '4px 0', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', fontWeight: '600', letterSpacing: '1px' }}>
+              <span>— OR —</span>
+            </div>
+
+            <div className="field-wrapper slide-element" style={{ transform: 'translateZ(20px)' }}>
+              <button
+                className="submit-button guest-login-btn"
+                type="button"
+                onClick={handleGuestLogin}
+                disabled={isLoading}
+                style={{
+                  background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)',
+                  color: '#ffffff',
+                  boxShadow: '0 4px 15px rgba(14, 165, 233, 0.3)',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                <i className="bx bx-user" style={{ marginRight: '6px', fontSize: '1rem', verticalAlign: 'middle' }}></i> Guest Login
               </button>
             </div>
 

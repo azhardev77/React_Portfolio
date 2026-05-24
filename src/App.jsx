@@ -16,7 +16,24 @@ import Footer from './components/Footer';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true';
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (loggedIn) {
+      try {
+        const stored = localStorage.getItem('currentUser');
+        const user = stored ? JSON.parse(stored) : null;
+        if (user && user.isGuest) {
+          const elapsed = Date.now() - user.loginTime;
+          if (elapsed >= 15 * 60 * 1000) {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            return false;
+          }
+        }
+      } catch {
+        return false;
+      }
+    }
+    return loggedIn;
   });
 
   const [currentUser, setCurrentUser] = useState(() => {
@@ -100,6 +117,30 @@ export default function App() {
     return () => window.removeEventListener('scroll', scrollActive);
   }, [isLoggedIn]);
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+  };
+
+  // Active background timer check for Guest session timeout
+  useEffect(() => {
+    if (!isLoggedIn || !currentUser || !currentUser.isGuest) return;
+
+    const checkInterval = setInterval(() => {
+      const elapsed = Date.now() - currentUser.loginTime;
+      const limit = 15 * 60 * 1000; // 15 minutes in ms
+      if (elapsed >= limit) {
+        clearInterval(checkInterval);
+        alert("⏱️ Guest session expired (15-minute timeout). Redirecting to Login...");
+        handleLogout();
+      }
+    }, 5000); // Check every 5 seconds
+
+    return () => clearInterval(checkInterval);
+  }, [isLoggedIn, currentUser]);
+
   const handleLoginSuccess = (userObj) => {
     setIsLoggedIn(true);
     const userToSave = userObj || { username: 'azhar', email: 'azhardev97@gmail.com', password: '12345', phone: '+91-7747047876' };
@@ -110,13 +151,6 @@ export default function App() {
 
   const handleThemeToggle = () => {
     setIsDark((prev) => !prev);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('currentUser');
   };
 
   const handleProfileUpdate = (updatedUser) => {
