@@ -1,0 +1,57 @@
+/* Clean slate global resets for custom main.css integration */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+/* Global high-specificity overrides to permanently remove any browser default or clashing underlines */
+a, a:hover, a:focus, a:active, .footer__link, .nav__link, .about__social a, .home__social a {
+  text-decoration: none !important;
+}
+
+/* ==========================================================================
+   PREMIUM SCROLL REVEAL ANIMATIONS
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: transform, opacity;
+  /* Premium Out-Expo curve for ultra-smooth gliding */
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), 
+              transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.fade-up {
+  transform: translateY(30px);
+}
+
+.reveal.fade-left {
+  transform: translateX(-30px);
+}
+
+.reveal.fade-right {
+  transform: translateX(30px);
+}
+
+.reveal.zoom-in {
+  transform: scale(0.88);
+  opacity: 0;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* Stagger Delays */
+.reveal.delay-100 { transition-delay: 100ms; }
+.reveal.delay-200 { transition-delay: 200ms; }
+.reveal.delay-300 { transition-delay: 300ms; }
+.reveal.delay-400 { transition-delay: 400ms; }
+.reveal.delay-500 { transition-delay: 500ms; }
+.reveal.delay-600 { transition-delay: 600ms; }
