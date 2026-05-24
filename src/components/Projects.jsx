@@ -9,7 +9,7 @@ const projects = [
     title: 'Personal Portfolio',
     desc: 'A fully responsive, interactive portfolio utilizing CSS Glassmorphism, dynamically computed neon-glow trails, scroll reveals, and cloud-synced databases.',
     github: 'https://github.com/azhardev77/AzharPortfolio',
-    live: 'https://azhardev77.github.io/AzharPortfolio/main.html',
+    live: 'https://react-portfolio-virid-chi.vercel.app/',
     tags: ['React', 'CSS', 'Vite'],
   },
   {

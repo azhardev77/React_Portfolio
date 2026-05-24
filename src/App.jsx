@@ -405,7 +405,7 @@ export default function App() {
 
         <div class="project-item">
           <div class="project-name">Personal Portfolio Website</div>
-          <a class="project-link" href="https://azhardev77.github.io/AzharPortfolio/main.html" target="_blank"><i class="bx bx-link"></i> azhardev77.github.io/AzharPortfolio/main.html</a>
+          <a class="project-link" href="https://react-portfolio-virid-chi.vercel.app/" target="_blank"><i class="bx bx-link"></i> react-portfolio-virid-chi.vercel.app</a>
           <ul>
             <li>Designed and developed a fully responsive personal portfolio website using HTML5, CSS3, and JavaScript.</li>
             <li>Implemented modern UI/UX principles and mobile-first responsive web design.</li>
