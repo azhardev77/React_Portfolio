@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import cloud1 from '../assets/cloud_1.svg';
 import cloud2 from '../assets/cloud_2.svg';
 import cloud3 from '../assets/cloud_3.svg';
@@ -15,15 +15,6 @@ export default function Header({ activeSection, isDark, onThemeToggle, onLogout,
   const [profilePassword, setProfilePassword] = useState(currentUser ? (currentUser.password || '') : '');
   const [profilePhone, setProfilePhone] = useState(currentUser ? (currentUser.phone || '') : '');
   const [isUpdating, setIsUpdating] = useState(false);
-
-  // Sync profile forms whenever active user changes
-  useEffect(() => {
-    if (currentUser) {
-      setProfileName(currentUser.username || '');
-      setProfilePassword(currentUser.password || '');
-      setProfilePhone(currentUser.phone || '');
-    }
-  }, [currentUser]);
 
   const handleProfileSave = async (e) => {
     e.preventDefault();

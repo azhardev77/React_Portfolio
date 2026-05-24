@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './main.css';
 
 // Components
@@ -409,6 +409,7 @@ export default function App() {
   return (
     <>
       <Header 
+        key={currentUser ? currentUser.email : 'guest'}
         activeSection={activeSection} 
         isDark={isDark} 
         onThemeToggle={handleThemeToggle} 
