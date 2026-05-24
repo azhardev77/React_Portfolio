@@ -13,6 +13,7 @@ export default function Login({ onLoginSuccess }) {
   const [regUsername, setRegUsername] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
+  const [regPhone, setRegPhone] = useState('');
 
   // Secure global cloud DB endpoint
   const DB_URL = "https://kvdb.io/AzharPortfolioUsersBucket_v1/users";
@@ -60,7 +61,12 @@ export default function Login({ onLoginSuccess }) {
 
     // Default admin login (zero network bypass)
     if (username === 'azhar' && password === '12345') {
-      onLoginSuccess();
+      onLoginSuccess({
+        username: 'azhar',
+        email: 'azhardev97@gmail.com',
+        password: '12345',
+        phone: '+91-7747047876'
+      });
       return;
     }
 
@@ -73,7 +79,7 @@ export default function Login({ onLoginSuccess }) {
     );
 
     if (validUser) {
-      onLoginSuccess();
+      onLoginSuccess(validUser);
     } else {
       alert('❌ Invalid username or password');
     }
@@ -84,8 +90,9 @@ export default function Login({ onLoginSuccess }) {
     const username = regUsername.trim();
     const email = regEmail.trim();
     const password = regPassword.trim();
+    const phone = regPhone.trim();
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !phone) {
       alert('⚠️ Please fill all fields');
       return;
     }
@@ -103,7 +110,7 @@ export default function Login({ onLoginSuccess }) {
       return;
     }
 
-    const updatedUsersList = [...users, { username, email, password }];
+    const updatedUsersList = [...users, { username, email, password, phone }];
     const synced = await saveCloudUsers(updatedUsersList);
     setIsLoading(false);
 
@@ -117,6 +124,7 @@ export default function Login({ onLoginSuccess }) {
     setRegUsername('');
     setRegEmail('');
     setRegPassword('');
+    setRegPhone('');
     setIsToggled(false); // Switch to sign in view
   };
 
@@ -218,6 +226,18 @@ export default function Login({ onLoginSuccess }) {
               />
               <label>Password</label>
               <i className="fa-solid fa-lock"></i>
+            </div>
+
+            <div className="field-wrapper slide-element">
+              <input
+                type="text"
+                id="regPhone"
+                value={regPhone}
+                onChange={(e) => setRegPhone(e.target.value)}
+                required
+              />
+              <label>Phone Number</label>
+              <i className="fa-solid fa-phone"></i>
             </div>
 
             <div className="field-wrapper slide-element">

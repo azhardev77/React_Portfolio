@@ -19,6 +19,15 @@ export default function App() {
     return localStorage.getItem('isLoggedIn') === 'true';
   });
 
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('currentUser');
+      return stored ? JSON.parse(stored) : { username: 'azhar', email: 'azhardev97@gmail.com', password: '12345', phone: '+91-7747047876' };
+    } catch {
+      return { username: 'azhar', email: 'azhardev97@gmail.com', password: '12345', phone: '+91-7747047876' };
+    }
+  });
+
   const [isDark, setIsDark] = useState(() => {
     return localStorage.getItem('theme') === 'dark';
   });
@@ -91,9 +100,12 @@ export default function App() {
     return () => window.removeEventListener('scroll', scrollActive);
   }, [isLoggedIn]);
 
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (userObj) => {
     setIsLoggedIn(true);
+    const userToSave = userObj || { username: 'azhar', email: 'azhardev97@gmail.com', password: '12345', phone: '+91-7747047876' };
+    setCurrentUser(userToSave);
     localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUser', JSON.stringify(userToSave));
   };
 
   const handleThemeToggle = () => {
@@ -102,7 +114,14 @@ export default function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setCurrentUser(null);
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+  };
+
+  const handleProfileUpdate = (updatedUser) => {
+    setCurrentUser(updatedUser);
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
   };
 
   if (!isLoggedIn) {
@@ -116,6 +135,8 @@ export default function App() {
         isDark={isDark} 
         onThemeToggle={handleThemeToggle} 
         onLogout={handleLogout} 
+        currentUser={currentUser}
+        onProfileUpdate={handleProfileUpdate}
       />
       
       <main className="l-main">
